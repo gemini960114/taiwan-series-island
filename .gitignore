@@ -3,5 +3,3 @@ dist/
 old/
 art/
 legacy/
-# team cheer songs: kept local until usage rights are confirmed
-public/assets/audio/*.mp3

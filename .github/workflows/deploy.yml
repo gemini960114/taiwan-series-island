@@ -26,7 +26,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run check   # roster ↔ metadata ↔ images must agree
+      - run: sudo apt-get install -y --no-install-recommends ffmpeg   # ffprobe for the 30-second song rule
+      - run: npm run check   # roster ↔ metadata ↔ images must agree, songs ≤ 30 s
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
