@@ -1,0 +1,21 @@
+{
+  "name": "puma-baseball-island",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check-avatars.mjs",
+    "images": "node scripts/make-images.mjs"
+  },
+  "dependencies": {
+    "three": "^0.165.0"
+  },
+  "devDependencies": {
+    "acorn": "^8.19.0",
+    "sharp": "^0.35.5",
+    "vite": "^8.3.5"
+  }
+}

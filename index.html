@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>龍象大戰 棒球島</title>
+<meta name="description" content="2026 中華職棒台灣大賽「龍象大戰」互動 3D 棒球島：味全龍 vs 中信兄弟的先發陣容、啦啦隊、賽程與比分。">
+<meta property="og:title" content="龍象大戰 棒球島">
+<meta property="og:description" content="2026 台灣大賽 味全龍 vs 中信兄弟：3D 球場、先發陣容、啦啦隊與賽程。">
+<meta name="theme-color" content="#1b2740">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,600&family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    function fail(msg) {
+      var el = document.getElementById('loading');
+      if (!el) return;
+      el.classList.remove('done');
+      el.innerHTML = '<div class="fail"><b>球場沒辦法開啟</b><p>' + msg + '</p><button onclick="location.reload()">重新整理</button></div>';
+    }
+    var c = document.createElement('canvas');
+    if (!(c.getContext('webgl2') || c.getContext('webgl'))) {
+      addEventListener('DOMContentLoaded', function () { fail('這個瀏覽器或裝置不支援 WebGL 3D 繪圖。請改用最新版的 Chrome、Edge、Safari 或 Firefox，或開啟瀏覽器的硬體加速。'); });
+      return;
+    }
+    addEventListener('error', function (e) { if (!window.__booted) fail('程式載入時發生錯誤（' + (e.message || '未知錯誤') + '），請重新整理再試一次。'); });
+    addEventListener('unhandledrejection', function (e) { if (!window.__booted) fail('程式載入時發生錯誤（' + ((e.reason && e.reason.message) || '未知錯誤') + '），請重新整理再試一次。'); });
+    setTimeout(function () { if (!window.__booted) fail('載入逾時，可能是網路不穩，請重新整理再試一次。'); }, 25000);
+  })();
+</script>
+</head>
+<body>
+<div id="loading">正在搭建巨蛋球場…</div>
+
+<div id="stage">
+  <div id="labels"></div>
+
+  <div id="brand" class="chip">
+    <div class="big" id="brandBig"></div>
+    <div>
+      <div class="title"><em>龍</em><u>象</u>大戰</div>
+      <div class="sub" id="brandSub"></div>
+    </div>
+  </div>
+
+  <div id="timebar" class="bar chip">
+    <button data-time="dawn" title="清晨" aria-label="清晨"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 18h18M7 18a5 5 0 0 1 10 0M12 8V5M5.5 11.5 4 10M18.5 11.5 20 10"/></svg></button>
+    <button data-time="day" title="白天" aria-label="白天"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button data-time="dusk" title="黃昏" aria-label="黃昏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 16h18M6 20h12M7 16a5 5 0 0 1 10 0M12 4v4M10 6l2 2 2-2"/></svg></button>
+    <button data-time="night" title="夜賽" aria-label="夜賽" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+    <button id="btnRain" title="颱風" aria-label="颱風特效"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7 15a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.5 2 3 3 0 0 1-.5 6z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg></button>
+  </div>
+
+  <div id="modebar" class="bar chip">
+    <button data-mode="tags" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="8" width="16" height="8" rx="4"/></svg>名牌</button>
+    <button data-mode="play" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M7 6.5c2 3 2 8 0 11M17 6.5c-2 3-2 8 0 11"/></svg>比賽</button>
+    <button data-mode="cheer" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7" cy="6" r="3"/><circle cx="17" cy="6" r="3"/><path d="M7 9v5l5 6 5-6V9"/></svg>應援</button>
+    <button data-mode="swap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h14l-3-3M20 16H6l3 3"/></svg>攻守</button>
+    <button data-mode="pause"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 5v14M15 5v14"/></svg><span>暫停</span></button>
+    <button data-mode="bird"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 4l8 6-8 6-8-6z"/><path d="M4 14l8 6 8-6"/></svg>鳥瞰</button>
+    <button data-mode="music" title="球隊應援曲：進攻方換隊時自動切換"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>音樂</button>
+    <button data-mode="log" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>戰報</button>
+  </div>
+
+  <div id="viewbar">
+    <button class="chip" id="btnUI" title="隱藏／顯示介面（快捷鍵 H）"><span class="ui-hide">◐ 隱藏介面</span><span class="ui-show">◑ 顯示介面</span></button>
+    <button class="chip" id="btnHome">↗ 全景</button>
+    <button class="chip" id="btnList" aria-controls="side" aria-expanded="true">☰ 清單</button>
+    <button class="chip" id="btnHelp" aria-label="操作說明">?</button>
+  </div>
+
+  <div id="half" class="chip"></div>
+  <div id="toast" role="status" aria-live="assertive"></div>
+
+  <section id="log" class="chip">
+    <header>巨蛋戰報 <span class="live">LIVE</span></header>
+    <ul id="logList" aria-live="polite"></ul>
+  </section>
+
+  <section id="intro" class="chip">
+    <p class="eyebrow">PLAY BALL / <span id="introStep">01</span></p>
+    <p id="introText"></p>
+    <footer><button class="skip">略過</button><button class="next">下一步</button></footer>
+  </section>
+</div>
+
+<aside id="side">
+  <section id="index">
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 class="headline" id="headline"></h1>
+    <p class="meta" id="introLine"></p>
+    <div class="score" id="score"></div>
+    <label for="search" class="sr-only">搜尋球員、啦啦隊員、賽程</label>
+    <input id="search" type="search" placeholder="搜尋球員、啦啦隊員、日期（如 10/24）…" autocomplete="off">
+    <div class="tabs">
+      <button class="on" data-tab="wc">味全龍</button>
+      <button data-tab="ctbc">中信兄弟</button>
+      <button data-tab="cheer">啦啦隊</button>
+      <button data-tab="series">賽程</button>
+    </div>
+    <ol id="list"></ol>
+    <p class="note">資料來源：維基百科〈2026年台灣大賽〉、Yahoo 運動、自由時報、味全龍官網、NOWnews、TVBS、三立。啦啦隊名單為球季公布陣容，可能有異動；啦啦隊大頭圖為 AI 生成的風格化插畫，非本人照片；場上對戰為動畫模擬，不是真實比賽過程。</p>
+  </section>
+  <section id="detail" hidden></section>
+</aside>
+
+<div id="help" hidden>
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="helpTitle" tabindex="-1">
+    <h2 id="helpTitle">操作說明</h2>
+    <dl>
+      <dt>拖曳</dt><dd>旋轉視角（右鍵拖曳平移）</dd>
+      <dt>滾輪</dt><dd>縮放</dd>
+      <dt>點選人物</dt><dd>查看球員或啦啦隊員資料</dd>
+      <dt>比賽</dt><dd>用 G4 先發陣容模擬對戰：好壞球、安打、接殺、跑壘、全壘打煙火</dd>
+      <dt>應援</dt><dd>啦啦隊跳舞、觀眾席波浪舞</dd>
+      <dt>攻守</dt><dd>立即交換上下半局</dd>
+      <dt>賽程</dt><dd>查 G1–G7 日期、比分與倒數；點已完賽的場次，記分板會換成那場</dd>
+      <dt>音樂</dt><dd>播放進攻方的應援曲，攻守交換時自動換成另一隊</dd>
+      <dt>颱風</dt><dd>薔琵颱風特效（G5 因此順延）</dd>
+    </dl>
+    <p class="quality"><label for="quality">畫質</label>
+      <select id="quality">
+        <option value="auto">自動</option>
+        <option value="low">低（手機、舊電腦）</option>
+        <option value="medium">中</option>
+        <option value="high">高</option>
+      </select>
+      <small>目前：<span id="qualityNow"></span>　切換後會重新載入</small></p>
+    <button class="close">知道了</button>
+  </div>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
