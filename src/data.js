@@ -3,7 +3,7 @@ import cheerMeta from './cheer-metadata.json' with { type: 'json' };
 // 2026 中華職棒台灣大賽「龍象大戰」資料
 // 來源：維基百科〈2026年台灣大賽〉、Yahoo 運動（G4 先發打線）、自由時報（32 人名單）、
 //       sgame.tw / 味全龍官網（小龍女 2026 陣容）、NOWnews（Passion Sisters 2026 陣容）、
-//       TVBS / 三立 / NOWnews（颱風順延後賽程）
+//       TVBS / 三立 / NOWnews / 中時（颱風與雨延賽後賽程）
 export const SITE = {
   brand: { big: ['TAIWAN', 'SERIES.'], title: '龍象大戰', sub: ['2026', '棒球島'] },
   eyebrow: 'THE GAME INDEX',
@@ -42,7 +42,7 @@ export const TEAMS = {
 
 // 賽程與結果（七戰四勝，全部在臺北大巨蛋）。
 // line：逐局得分；null = 主隊最後半局免打（X）；walkoff = 主隊再見得分。start：台灣時間開打時刻。
-// G5–G7 因強烈颱風薔琵順延一天（TVBS、三立、NOWnews 10/22 報導）。
+// G5–G7 因強烈颱風薔琵連兩天延賽、共順延兩天（NOWnews、中時 10/22–10/24 報導）。
 export const SCHEDULE = [
   { g: 'G1', date: '10/17', wd: '六', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋',
     line: { ctbc: [0, 0, 0, 0, 0, 0, 0, 0, 0], wc: [0, 0, 0, 0, 2, 1, 0, 0, null] },
@@ -60,13 +60,13 @@ export const SCHEDULE = [
     rhe: { wc: [4, 10, 0], ctbc: [5, 8, 0] }, wp: '菲力士', lp: '陳冠偉', crowd: '40,000',
     sp: '味全 黃暐傑 vs 中信 鄭浩均',
     note: '中信兄弟延長到 11 局下攻下致勝分，5:4 擊敗味全龍，系列戰扳回一勝。' },
-  { g: 'G5', date: '10/24', wd: '六', time: '17:05', postponed: true, start: '2026-10-24T17:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋',
-    sp: '中信 伍立辰 vs 味全 蔣銲',
-    note: '原訂 10/23（五），因強烈颱風薔琵襲台、台北市停班停課而順延一天。味全贏球即封王。' },
-  { g: 'G6', date: '10/25', wd: '日', time: '17:05', postponed: true, start: '2026-10-25T17:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋', ifNeeded: true,
-    note: '颱風順延後的新日期。' },
-  { g: 'G7', date: '10/26', wd: '一', time: '15:05', postponed: true, start: '2026-10-26T15:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋', ifNeeded: true,
+  { g: 'G5', date: '10/25', wd: '日', time: '17:05', postponed: true, start: '2026-10-25T17:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋',
+    sp: '中信 菲力士 vs 味全 蔣銲',
+    note: '原訂 10/23（五），因強烈颱風薔琵襲台、台北市連兩天停班停課，10/23、10/24 都延賽。中信改派菲力士先發，味全贏球即封王。' },
+  { g: 'G6', date: '10/26', wd: '一', time: '15:05', postponed: true, start: '2026-10-26T15:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋', ifNeeded: true,
     note: '光復節補假，提早到下午 3:05 開打。' },
+  { g: 'G7', date: '10/27', wd: '二', time: '18:35', postponed: true, start: '2026-10-27T18:35:00+08:00', away: 'ctbc', home: 'wc', venue: '場地未定', ifNeeded: true,
+    note: '味全龍租借大巨蛋只到 10/26，若打到 G7 須另覓球場。' },
 ];
 export const SCENE_GAME = 'G4'; // 場上球員取自這一場的先發陣容
 
