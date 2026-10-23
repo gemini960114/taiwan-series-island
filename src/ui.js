@@ -9,7 +9,7 @@ import { PRESETS, setPreset, weather } from './lighting.js';
 import { pushLog } from './log.js';
 import { abortPlay, fireworkShow, rain, state, switchHalf, toast } from './simulation.js';
 import { Q, setQuality } from './quality.js';
-import { hold, musicAvailable, setMusic } from './audio.js';
+import { hold, musicAvailable, onMusicChange, setMusic } from './audio.js';
 
 let shownGame = sceneGame; // the game on the scoreboard and score card
 
@@ -382,10 +382,6 @@ function setMode(mode, on) {
   }
   if (mode === 'cheer') state.cheer = on;
   if (mode === 'log') document.body.classList.toggle('log-on', on);
-  if (mode === 'music') {
-    setMusic(on);
-    if (on) toast('♪ 應援曲開啟<small>進攻方換隊時自動切歌</small>', 1600);
-  }
   if (mode === 'pause') {
     state.paused = on;
     hold('pause', on);
@@ -411,13 +407,21 @@ function toggleList(on) {
 }
 $('#btnHome').onclick = goHome;
 // without the song files (e.g. the public site) the music button explains instead of failing silently
-musicAvailable.then(ok => {
-  if (ok) return;
-  const btn = document.querySelector('[data-mode=music]');
-  btn.disabled = true;
-  btn.title = '此版本未附應援曲音檔';
-  btn.setAttribute('aria-label', '音樂（此版本未附音檔）');
+musicAvailable.then(ok => { if (!ok) $('#btnMusic').hidden = true; });
+// the cheer-song button: shows which team's song plays, animates while playing
+const mBtn = $('#btnMusic');
+onMusicChange(({ enabled, team, held }) => {
+  mBtn.classList.toggle('on', enabled);
+  mBtn.classList.toggle('held', enabled && held);
+  mBtn.setAttribute('aria-pressed', enabled);
+  mBtn.dataset.team = team ?? '';
+  $('#musicNow').textContent = !enabled ? '點我播放' : held ? '已暫停' : `${TEAMS[team]?.name ?? ''}進攻中`;
 });
+mBtn.onclick = () => {
+  const on = !mBtn.classList.contains('on');
+  setMusic(on);
+  if (on) toast('♪ 應援曲開啟<small>攻守交換時自動換成另一隊的歌</small>', 1600);
+};
 // list rows act like buttons for keyboard users
 $('#list').addEventListener('keydown', ev => {
   if ((ev.key === 'Enter' || ev.key === ' ') && ev.target.matches('li[tabindex]')) { ev.preventDefault(); ev.target.click(); }

@@ -305,3 +305,50 @@ body.log-on #log { display: flex; }
   .tag .face { width: 16px; height: 16px; margin: -2px 0 -2px -3px; border-width: 1.5px; }
   .tag .kr { font-size: 9px; padding: 0 4px; }
 }
+
+/* help dialog: header with close stays visible, body scrolls on small screens */
+#help .box { max-height: min(86vh, 640px); overflow-y: auto; overscroll-behavior: contain; }
+#help .help-head { position: sticky; top: -30px; z-index: 1; display: flex; align-items: center; justify-content: space-between;
+  margin: -30px -34px 14px; padding: 22px 22px 12px 34px; background: #fff; border-radius: 22px 22px 0 0; }
+#help .help-head h2 { margin: 0; }
+#help .help-x { width: 38px; height: 38px; border-radius: 50%; padding: 0; background: #f4ece4; color: var(--ink); font-size: 16px; }
+#help .quality { margin: 0 0 18px; padding: 12px 14px; border-radius: 12px; background: #f8f3ee; }
+#help dl { grid-template-columns: 96px 1fr; gap: 8px 12px; margin-bottom: 20px; }
+@media (max-width: 900px) {
+  #help { place-items: end center; }
+  #help .box { width: 100%; max-height: 78vh; padding: 22px 20px calc(18px + env(safe-area-inset-bottom)); border-radius: 22px 22px 0 0; font-size: 14px; }
+  #help .help-head { top: -22px; margin: -22px -20px 12px; padding: 16px 16px 10px 20px; }
+  #help .help-head h2 { font-size: 19px; }
+  #help dl { grid-template-columns: 84px 1fr; gap: 6px 10px; margin-bottom: 16px; }
+  #help .help-ok { width: 100%; }
+}
+
+/* ---------- standalone cheer-song button ---------- */
+#btnMusic { position: absolute; right: 28px; top: 118px; display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 14px;
+  border-radius: 999px; text-align: left; transition: background .25s, color .25s, transform .15s; z-index: 3; }
+#btnMusic:hover { transform: translateY(-1px); }
+#btnMusic[hidden] { display: none; }
+#btnMusic .m-text { display: grid; line-height: 1.2; }
+#btnMusic b { font-size: 15px; }
+#btnMusic small { font-size: 11px; color: var(--muted); }
+#btnMusic .eq { display: flex; align-items: flex-end; gap: 3px; width: 22px; height: 20px; }
+#btnMusic .eq i { width: 4px; height: 6px; border-radius: 2px; background: currentColor; opacity: .55; }
+#btnMusic.on { background: var(--accent); color: #fff; box-shadow: 0 6px 22px rgba(226, 96, 47, .45); }
+#btnMusic.on[data-team="wc"] { background: var(--wc); box-shadow: 0 6px 22px rgba(200, 16, 46, .45); }
+#btnMusic.on[data-team="ctbc"] { background: var(--ctbc); color: var(--ink); box-shadow: 0 6px 22px rgba(242, 194, 0, .5); }
+#btnMusic.on small { color: inherit; opacity: .85; }
+#btnMusic.on .eq i { opacity: 1; animation: eq .9s ease-in-out infinite; }
+#btnMusic.on .eq i:nth-child(2) { animation-delay: -.3s; }
+#btnMusic.on .eq i:nth-child(3) { animation-delay: -.6s; }
+#btnMusic.on .eq i:nth-child(4) { animation-delay: -.15s; }
+#btnMusic.held .eq i { animation-play-state: paused; }
+@keyframes eq { 0%, 100% { height: 5px; } 50% { height: 20px; } }
+/* not dimmed with "hide interface": music stays one tap away */
+@media (max-width: 1800px) { #btnMusic { top: auto; bottom: 74px; right: 24px; } }
+@media (max-width: 900px) {
+  #btnMusic { right: 12px; bottom: calc(66px + env(safe-area-inset-bottom)); padding: 8px 14px 8px 12px; }
+  #btnMusic b { font-size: 13px; }
+  #log { right: 150px; }
+  #intro { bottom: calc(122px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) { #btnMusic.on .eq i { animation: none; height: 14px; } }
