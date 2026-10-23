@@ -7,7 +7,7 @@ import { boats, spinners } from './world.js';
 import { dancers, players } from './figures.js';
 import { applyLight } from './lighting.js';
 import { lerpAngle, rain, sim, state, stepPlay, updateFireworks } from './simulation.js';
-import { ease, marker, renderList, route, setMode, tickFacts, tween, updateLabels } from './ui.js';
+import { ease, marker, renderList, route, setMode, tickFacts, toggleList, tween, updateLabels } from './ui.js';
 
 // ================= loop =================
 const tmp = new THREE.Vector3();
@@ -131,6 +131,7 @@ resize();
 tick();
 // deep link, e.g. #c:wc:李多慧 · #p:ctbc:曾頌恩 · #G5
 const deep = decodeURIComponent(location.hash.slice(1));
+if (matchMedia('(max-width: 900px)').matches) { toggleList(false); setMode('log', false); }
 if (deep) { $('#intro')?.remove(); route(deep); }
 if (reduceMotion) { setMode('cheer', false); setMode('play', false); }
 window.__booted = true; // tells the fallback watchdog in index.html that the app started

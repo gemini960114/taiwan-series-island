@@ -361,9 +361,12 @@ function renderDetail(e) {
 }
 
 // ================= toolbar =================
+const isPhone = () => matchMedia('(max-width: 900px)').matches;
 document.querySelectorAll('[data-time]').forEach(b => b.onclick = () => {
-  setPreset(PRESETS[b.dataset.time]);
-  document.querySelectorAll('[data-time]').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+  const all = [...document.querySelectorAll('[data-time]')];
+  const pick = isPhone() && b.classList.contains('on') ? all[(all.indexOf(b) + 1) % all.length] : b;
+  setPreset(PRESETS[pick.dataset.time]);
+  all.forEach(x => { x.classList.toggle('on', x === pick); x.setAttribute('aria-pressed', x === pick); });
 });
 function setMode(mode, on) {
   const btn = document.querySelector(`[data-mode=${mode}]`);
@@ -404,7 +407,6 @@ $('#btnRain').onclick = () => {
 function toggleList(on) {
   on ??= document.body.classList.contains('list-off');
   document.body.classList.toggle('list-off', !on);
-  $('#btnList').classList.toggle('on', !on);
   $('#btnList').setAttribute('aria-expanded', on);
 }
 $('#btnHome').onclick = goHome;
@@ -443,6 +445,7 @@ document.addEventListener('keydown', ev => {
 });
 try { if (localStorage.getItem('ui-min')) toggleUI(true); } catch {}
 $('#btnList').onclick = () => toggleList();
+$('#sideClose').onclick = () => { toggleList(false); $('#btnList').focus(); };
 function openHelp() {
   $('#help').hidden = false;
   $('#help .box').focus();

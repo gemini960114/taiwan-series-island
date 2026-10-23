@@ -65,17 +65,17 @@
   </div>
 
   <div id="viewbar">
-    <button class="chip" id="btnUI" title="隱藏／顯示介面（快捷鍵 H）"><span class="ui-hide">◐ 隱藏介面</span><span class="ui-show">◑ 顯示介面</span></button>
-    <button class="chip" id="btnHome">↗ 全景</button>
-    <button class="chip" id="btnList" aria-controls="side" aria-expanded="true">☰ 清單</button>
+    <button class="chip" id="btnUI" title="隱藏／顯示介面（快捷鍵 H）" aria-label="隱藏／顯示介面"><span class="ui-hide">◐<span class="lbl"> 隱藏介面</span></span><span class="ui-show">◑<span class="lbl"> 顯示介面</span></span></button>
+    <button class="chip" id="btnHome" aria-label="全景">↗<span class="lbl"> 全景</span></button>
+    <button class="chip" id="btnList" aria-controls="side" aria-expanded="true" aria-label="清單">☰<span class="lbl"> 清單</span></button>
     <button class="chip" id="btnHelp" aria-label="操作說明">?</button>
   </div>
 
   <div id="half" class="chip"></div>
   <div id="toast" role="status" aria-live="assertive"></div>
 
-  <section id="log" class="chip">
-    <header>巨蛋戰報 <span class="live">LIVE</span></header>
+  <section id="log" class="chip" aria-label="巨蛋戰報">
+    <span class="live">LIVE</span>
     <ul id="logList" aria-live="polite"></ul>
   </section>
 
@@ -87,6 +87,7 @@
 </div>
 
 <aside id="side">
+  <button id="sideClose" class="side-close" aria-label="關閉清單" title="關閉">✕</button>
   <section id="index">
     <p class="eyebrow" id="eyebrow"></p>
     <h1 class="headline" id="headline"></h1>

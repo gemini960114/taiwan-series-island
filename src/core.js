@@ -49,6 +49,8 @@ function resize() {
   const w = stage.clientWidth, h = stage.clientHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
+  // portrait phones: widen the view so the whole ballpark still fits across the screen
+  camera.fov = camera.aspect < 1 ? Math.min(58, 30 / Math.max(camera.aspect, .5) ** .9) : 30;
   camera.updateProjectionMatrix();
 }
 new ResizeObserver(resize).observe(stage);

@@ -243,3 +243,65 @@ body.list-off #side { transform: translateX(100%); }
 #help .quality small { width: 100%; color: var(--muted); }
 #list li[tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; background: #f4ece4; }
 .bar button:disabled { opacity: .35; cursor: not-allowed; }
+
+/* =========================================================
+   Calmer layout: one-line ticker, closable panel, phone layout
+   ========================================================= */
+/* game log: a single latest line, not a stacked card */
+#log { width: auto; max-width: min(520px, calc(100% - 80px)); padding: 9px 16px; border-radius: 999px;
+  display: none; align-items: center; gap: 10px; }
+body.log-on #log { display: flex; }
+#log ul { display: block; min-width: 0; }
+#log li { padding: 0; background: none !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#log li:not(:first-child) { display: none; }
+
+/* close button inside the side panel / bottom sheet */
+.side-close { position: sticky; top: 0; float: right; z-index: 2; width: 40px; height: 40px; margin: -24px -14px 0 0;
+  border-radius: 50%; background: #fff; border: 1px solid var(--line); font-size: 16px; color: var(--muted);
+  box-shadow: var(--shadow); }
+.side-close:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ---------- phones ---------- */
+@media (max-width: 900px) {
+  /* the 3D field gets the whole screen; the list is a bottom sheet you open on demand */
+  #stage, body.list-off #stage { inset: 0; }
+  #side { height: 64vh; border-radius: 22px 22px 0 0; box-shadow: 0 -8px 30px rgba(40, 30, 20, .18); padding: 26px 18px 40px; }
+  #side::before { content: ''; position: sticky; top: -14px; display: block; width: 44px; height: 5px; margin: -12px auto 12px;
+    border-radius: 3px; background: var(--line); }
+  .side-close { margin: -6px -4px 0 0; width: 36px; height: 36px; }
+  .headline { font-size: 22px; margin-bottom: 10px; }
+  .meta { font-size: 13px; margin-bottom: 12px; }
+  .tabs button { height: 44px; font-size: 14px; }
+  #search { height: 46px; font-size: 15px; }
+
+  /* compact header */
+  #brand { left: 12px; top: 12px; padding: 8px 12px; gap: 10px; border-radius: 16px; }
+  #brand .big { font-size: 13px; line-height: 1; letter-spacing: 0; }
+  #brand .title { font-size: 16px; letter-spacing: 1px; }
+  #brand .sub { font-size: 11px; margin-top: 2px; }
+  #viewbar { top: 12px; right: 12px; gap: 6px; }
+  #viewbar button { height: 40px; min-width: 40px; padding: 0 11px; border-radius: 12px; font-size: 16px; }
+  #viewbar .lbl { display: none; }
+
+  /* toolbars become one compact dock at the bottom; time of day is a single button that cycles */
+  #timebar, #modebar { top: auto; bottom: calc(12px + env(safe-area-inset-bottom)); right: auto; overflow: visible; padding: 4px; border-radius: 999px; }
+  #timebar { left: 12px; }
+  #timebar button[data-time]:not(.on) { display: none; }
+  #modebar { left: 112px; right: 12px; overflow-x: auto; scrollbar-width: none; }
+  #modebar::-webkit-scrollbar { display: none; }
+  .bar button { min-width: 42px; height: 42px; font-size: 10px; gap: 0; padding: 0 4px; flex: none; }
+  .bar button svg { width: 18px; height: 18px; }
+
+  #log { left: 12px; right: 12px; max-width: none; bottom: calc(66px + env(safe-area-inset-bottom)); padding: 7px 12px; font-size: 12px; }
+  #intro { bottom: calc(66px + env(safe-area-inset-bottom)); padding: 16px 18px; }
+  #intro p { font-size: 14px; margin-bottom: 10px; }
+  #toast { font-size: 38px; }
+  #toast small { font-size: 16px; }
+
+  /* smaller name tags so the field stays visible */
+  .tag { font-size: 11px; padding: 3px 8px 3px 6px; gap: 4px; }
+  .tag b { font-size: 9px; }
+  .tag i { width: 7px; height: 7px; }
+  .tag .face { width: 16px; height: 16px; margin: -2px 0 -2px -3px; border-width: 1.5px; }
+  .tag .kr { font-size: 9px; padding: 0 4px; }
+}
