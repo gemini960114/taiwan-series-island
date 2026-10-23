@@ -417,7 +417,12 @@ onMusicChange(({ enabled, team, held }) => {
   mBtn.dataset.team = team ?? '';
   $('#musicNow').textContent = !enabled ? '點我播放' : held ? '已暫停' : `${TEAMS[team]?.name ?? ''}進攻中`;
 });
+try { if (!localStorage.getItem('music-tried')) mBtn.classList.add('hint'); } catch { mBtn.classList.add('hint'); }
 mBtn.onclick = () => {
+  if (mBtn.classList.contains('hint')) {
+    mBtn.classList.remove('hint');
+    try { localStorage.setItem('music-tried', '1'); } catch {}
+  }
   const on = !mBtn.classList.contains('on');
   setMusic(on);
   if (on) toast('♪ 應援曲開啟<small>攻守交換時自動換成另一隊的歌</small>', 1600);
@@ -431,7 +436,8 @@ document.addEventListener('visibilitychange', () => hold('hidden', document.hidd
 // toggle buttons announce their state to screen readers
 document.querySelectorAll('[data-mode]:not([data-mode=swap])').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
 document.querySelectorAll('[data-time]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
-$('#btnRain').setAttribute('aria-pressed', 'false');
+$('#btnRain').classList.toggle('on', weather.rain);
+$('#btnRain').setAttribute('aria-pressed', weather.rain);
 // graphics quality picker (help dialog)
 const qSel = $('#quality');
 qSel.value = Q.choice;
@@ -492,21 +498,5 @@ function tickFacts(t) {
   if (t > nextFact) { pushLog(...FACTS[factI++ % FACTS.length]); nextFact = t + 6; }
 }
 
-// ================= onboarding =================
-const STEPS = [
-  '2026 台灣大賽「龍象大戰」G4，10/21 臺北大巨蛋。拖曳旋轉、滾輪縮放。',
-  '點選場上的球員或應援台上的啦啦隊員，看他們的資料；右側清單有完整名單。',
-  '場上會用 G4 先發陣容模擬對戰：好壞球、安打、接殺、跑壘，打出全壘打還會放煙火。',
-  '右側「賽程」可以查 G1–G7、看 G5 開打倒數；點已完賽的場次，外野記分板會換成那場比分。',
-];
-let step = 0;
-function showStep() {
-  $('#introStep').textContent = pad(step + 1);
-  $('#introText').textContent = STEPS[step];
-  $('#intro .next').textContent = step === STEPS.length - 1 ? '開始看球' : '下一步';
-}
-$('#intro .next').onclick = () => { if (++step >= STEPS.length) $('#intro').remove(); else showStep(); };
-$('#intro .skip').onclick = () => $('#intro').remove();
-showStep();
 
-export { shownGame, labelBox, tagText, v3, updateLabels, tween, flyTo, ease, marker, setHover, ray, ndc, hitBoxes, entAt, down, select, deselect, goHome, setBird, lineScore, showGame, seriesWins, nextGame, fmtCountdown, trackerHtml, posOrderLabel, dotHead, playerRow, cheerRow, gameText, gameRow, renderList, selectGame, renderDetail, setMode, toggleList, toggleUI, tickFacts, STEPS, step, showStep, route };
+export { shownGame, labelBox, tagText, v3, updateLabels, tween, flyTo, ease, marker, setHover, ray, ndc, hitBoxes, entAt, down, select, deselect, goHome, setBird, lineScore, showGame, seriesWins, nextGame, fmtCountdown, trackerHtml, posOrderLabel, dotHead, playerRow, cheerRow, gameText, gameRow, renderList, selectGame, renderDetail, setMode, toggleList, toggleUI, tickFacts, route };

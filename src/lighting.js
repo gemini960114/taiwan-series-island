@@ -14,7 +14,7 @@ const PRESETS = {
 const L = { sky: new THREE.Color(), sun: new THREE.Color(), hs: new THREE.Color(), hg: new THREE.Color(), water: new THREE.Color(), dir: new THREE.Vector3(), si: 3, hi: 1.2, win: 0, lamp: 0 };
 let preset = PRESETS.night;
 const setPreset = p => { preset = p; };
-const weather = { rain: false };
+const weather = { rain: true }; // the typhoon that postponed G5: the page opens in the rain
 function applyLight(k) {
   const P = preset, wet = weather.rain;
   for (const c of ['sky', 'sun', 'hs', 'hg', 'water']) {

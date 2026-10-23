@@ -132,7 +132,7 @@ tick();
 // deep link, e.g. #c:wc:李多慧 · #p:ctbc:曾頌恩 · #G5
 const deep = decodeURIComponent(location.hash.slice(1));
 if (matchMedia('(max-width: 900px)').matches) { toggleList(false); setMode('log', false); }
-if (deep) { $('#intro')?.remove(); route(deep); }
+if (deep) route(deep);
 if (reduceMotion) { setMode('cheer', false); setMode('play', false); }
 window.__booted = true; // tells the fallback watchdog in index.html that the app started
 requestAnimationFrame(() => $('#loading').classList.add('done'));

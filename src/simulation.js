@@ -9,6 +9,7 @@ import { dancers, players } from './figures.js';
 import { pushLog } from './log.js';
 import { Q } from './quality.js';
 import { playTeam } from './audio.js';
+import { weather } from './lighting.js';
 
 // ================= game simulation =================
 // A made-up at-bat simulation played with the real G4 starting lineups (not the real game).
@@ -188,7 +189,7 @@ const rain = (() => {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(arr, 3));
   const lines = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: '#cfe0ff', transparent: true, opacity: .45 }));
-  lines.visible = false;
+  lines.visible = weather.rain;
   scene.add(lines);
   lines.userData.update = dt => {
     const a = geo.attributes.position.array;
