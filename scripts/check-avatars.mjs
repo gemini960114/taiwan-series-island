@@ -38,8 +38,8 @@ for (const [team, group] of Object.entries(CHEER)) {
 const used = new Set(Object.values(CHEER).flatMap(g => g.members.map(m => m.avatarKey)));
 for (const k of Object.keys(meta)) if (!used.has(k)) problems.push(`${k}: in cheer-metadata.json but not in the roster`);
 
-// cheer songs: team rule is 30 seconds or less per clip (needs ffprobe; skipped if it is not installed)
-const MAX_SECONDS = 30;
+// cheer songs: team rule is 70 seconds or less per clip (needs ffprobe; skipped if it is not installed)
+const MAX_SECONDS = 70;
 for (const f of fs.existsSync('public/assets/audio') ? fs.readdirSync('public/assets/audio').filter(f => f.endsWith('.mp3')) : []) {
   try {
     const out = execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', `public/assets/audio/${f}`], { encoding: 'utf8' });

@@ -1,6 +1,6 @@
 // Team cheer songs: the batting team's song plays (looped) and cross-fades when the half-inning switches.
 // Off by default — browsers only allow audio after the viewer presses something.
-const TRACKS = { wc: 'assets/audio/wc.mp3', ctbc: 'assets/audio/ctbc.mp3' };
+const TRACKS = { wc: 'assets/audio/wc.mp3', ctbc: 'assets/audio/canon.mp3' };
 const VOLUME = .55;
 const players = {};
 const fades = new Map();

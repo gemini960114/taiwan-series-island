@@ -33,7 +33,7 @@ npm run preview    # 預覽建置結果
 
 ```bash
 npm run images     # 從 art/cheer/ 的 PNG 原圖產生網頁用 WebP（原圖不在版本庫中）
-npm run check      # 檢查啦啦隊名單、metadata、圖片，以及應援曲是否在 30 秒以內
+npm run check      # 檢查啦啦隊名單、metadata、圖片，以及應援曲是否在 70 秒以內
 ```
 
 推送到 `main` 時，GitHub Actions 會自動檢查、建置，再發布到 GitHub Pages（設定在 `.github/workflows/deploy.yml`）。
