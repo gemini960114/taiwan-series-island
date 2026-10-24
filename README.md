@@ -4,6 +4,15 @@
 
 **線上版：** https://gemini960114.github.io/taiwan-series-island/
 
+## 影片
+
+用這個網頁錄製的球隊介紹影片，各介紹三位球員與三位啦啦隊員：
+
+| 中信兄弟 | 味全龍 |
+|---|---|
+| [![中信兄弟介紹影片](https://img.youtube.com/vi/fha0hol8bKs/hqdefault.jpg)](https://youtu.be/fha0hol8bKs) | [![味全龍介紹影片](https://img.youtube.com/vi/MZUSC8QgWaM/hqdefault.jpg)](https://youtu.be/MZUSC8QgWaM) |
+| [球員與 Passion Sisters 介紹](https://youtu.be/fha0hol8bKs) | [球員與小龍女介紹](https://youtu.be/MZUSC8QgWaM) |
+
 ## 參考
 
 版面與互動方式參考 [HEART 政策島](https://puma.taipei/heart-island)：一座低多邊形島嶼地圖、浮動名牌、時段切換和側邊索引清單。程式碼、3D 模型與內容都是另外製作的，主題換成棒球。
