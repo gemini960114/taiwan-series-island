@@ -159,11 +159,12 @@ function lineScore(g) {
   const cols = g.line.wc.length;
   const row = t => `<tr class="${winnerOf(g) === t ? 'w' : ''}"><td>${TEAMS[t].short}</td>${g.line[t].map((v, i) =>
     `<td class="${v ? 'run' : ''}">${v == null ? 'X' : v}${g.walkoff && t === g.home && i === cols - 1 ? 'x' : ''}</td>`).join('')}${g.rhe[t].map((v, i) => `<td class="${i ? '' : 'r sep'}">${v}</td>`).join('')}</tr>`;
-  const extra = [g.sv && `救援 ${g.sv}`, g.hr && `全壘打 ${g.hr}`].filter(Boolean).join('・');
-  return `<div class="cap"><span><b>台灣大賽 ${g.g}</b>・${g.date}（${g.wd}）・${g.venue}</span><span>${g.crowd} 人</span></div>
+  // any of these may be missing right after a game, before the box score is published
+  const facts = [g.wp && `勝投 ${g.wp}`, g.lp && `敗投 ${g.lp}`, g.sv && `救援 ${g.sv}`, g.hr && `全壘打 ${g.hr}`].filter(Boolean).join('・');
+  return `<div class="cap"><span><b>台灣大賽 ${g.g}</b>・${g.date}（${g.wd}）・${g.venue}</span>${g.crowd ? `<span>${g.crowd} 人</span>` : ''}</div>
     <table><tr><th></th>${g.line.wc.map((_, i) => `<th>${i + 1}</th>`).join('')}<th class="sep">R</th><th>H</th><th>E</th></tr>
     ${row(g.away)}${row(g.home)}</table>
-    <p>勝投 ${g.wp}・敗投 ${g.lp}${extra ? '・' + extra : ''}${g.note ? '<br>' + g.note : ''}</p>`;
+    <p>${[facts, g.note].filter(Boolean).join('<br>')}</p>`;
 }
 function showGame(g) {
   shownGame = g;
@@ -482,11 +483,11 @@ const FACTS = [
   ['G2', '10/18 味全 3:1 中信，曾聖安全壘打'],
   ['G3', '10/20 味全 6:0 中信，勝投鋼龍'],
   ['G4', '10/21 中信延長 11 局 5:4 擊敗味全'],
-  ['G4', '先發投手：味全 黃暐傑 vs 中信 鄭浩均'],
-  ['G4', '臺北大巨蛋 4 萬人滿場'],
-  ['颱風', '強烈颱風薔琵來襲，G5 連兩天延賽，改到 10/25（日）17:05'],
-  ['G5', '預告先發：中信 菲力士 vs 味全 蔣銲，味全贏球即封王'],
-  ['G6', '若有必要：10/26（一）光復節補假 15:05'],
+  ['G5', '10/25 中信 4:3 味全，9 局上江坤宇盜三壘、黃韋盛犧牲打送回超前分'],
+  ['G5', '先發投手：中信 羅戈 vs 味全 蔣銲'],
+  ['G5', '劉基鴻 4 局下陽春全壘打'],
+  ['颱風', '強烈颱風薔琵來襲，G5 連兩天延賽，順延到 10/25（日）'],
+  ['G6', '10/26（一）光復節補假 15:05，味全 3 勝 2 敗領先'],
   ['G7', '若有必要：10/27（二）18:35，場地未定'],
   ['應援', '小龍女 Captain 李多慧、金娜妍、權喜原 在一壘側應援台'],
   ['應援', 'Passion Sisters 邊荷律、金渡兒、JJUBI 在三壘側應援台'],

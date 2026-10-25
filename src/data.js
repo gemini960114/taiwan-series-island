@@ -1,7 +1,7 @@
 import cheerMeta from './cheer-metadata.json' with { type: 'json' };
 
 // 2026 中華職棒台灣大賽「龍象大戰」資料
-// 來源：維基百科〈2026年台灣大賽〉、Yahoo 運動（G4 先發打線）、自由時報（32 人名單）、
+// 來源：維基百科〈2026年台灣大賽〉、Yahoo 運動（G4 先發打線）、TVBS（G5 先發打線）、自由時報（32 人名單、G5 戰報）、
 //       sgame.tw / 味全龍官網（小龍女 2026 陣容）、NOWnews（Passion Sisters 2026 陣容）、
 //       TVBS / 三立 / NOWnews / 中時（颱風與雨延賽後賽程）
 export const SITE = {
@@ -60,15 +60,24 @@ export const SCHEDULE = [
     rhe: { wc: [4, 10, 0], ctbc: [5, 8, 0] }, wp: '菲力士', lp: '陳冠偉', crowd: '40,000',
     sp: '味全 黃暐傑 vs 中信 鄭浩均',
     note: '中信兄弟延長到 11 局下攻下致勝分，5:4 擊敗味全龍，系列戰扳回一勝。' },
+  // G5 比分、逐局：自由時報賽後報導；先發打序：TVBS。勝敗投、觀眾人數未見報導，先不填。
   { g: 'G5', date: '10/25', wd: '日', time: '17:05', postponed: true, start: '2026-10-25T17:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋',
-    sp: '中信 菲力士 vs 味全 蔣銲',
-    note: '原訂 10/23（五），因強烈颱風薔琵襲台、台北市連兩天停班停課，10/23、10/24 都延賽。中信改派菲力士先發，味全贏球即封王。' },
-  { g: 'G6', date: '10/26', wd: '一', time: '15:05', postponed: true, start: '2026-10-26T15:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋', ifNeeded: true,
+    line: { ctbc: [0, 1, 0, 1, 0, 0, 1, 0, 1], wc: [0, 0, 0, 1, 0, 0, 2, 0, 0] },
+    rhe: { ctbc: [4, 9, 0], wc: [3, 6, 0] }, hr: '劉基鴻',
+    sp: '中信 羅戈 vs 味全 蔣銲',
+    lineups: {
+      ctbc: { sp: '羅戈', lineup: [['張士綸', '2B'], ['張仁瑋', '3B'], ['曾頌恩', 'RF'], ['王威晨', 'DH'], ['宋晟睿', 'CF'],
+        ['詹子賢', 'LF'], ['江坤宇', 'SS'], ['高宇杰', 'C'], ['黃韋盛', '1B']] },
+      wc: { sp: '蔣銲', lineup: [['李凱威', '2B'], ['陳子豪', 'LF'], ['朱育賢', '1B'], ['劉基鴻', '3B'], ['張政禹', 'SS'],
+        ['郭天信', 'CF'], ['李展毅', 'DH'], ['林辰勳', 'C'], ['曾聖安', 'RF']] },
+    },
+    note: '9 局上江坤宇安打後盜上三壘，黃韋盛高飛犧牲打送回超前分，中信兄弟 4:3 擊敗味全龍，系列戰追成 2 勝 3 敗。原訂 10/23，因強烈颱風薔琵連兩天延賽。' },
+  { g: 'G6', date: '10/26', wd: '一', time: '15:05', postponed: true, start: '2026-10-26T15:05:00+08:00', away: 'ctbc', home: 'wc', venue: '臺北大巨蛋',
     note: '光復節補假，提早到下午 3:05 開打。' },
   { g: 'G7', date: '10/27', wd: '二', time: '18:35', postponed: true, start: '2026-10-27T18:35:00+08:00', away: 'ctbc', home: 'wc', venue: '場地未定', ifNeeded: true,
     note: '味全龍租借大巨蛋只到 10/26，若打到 G7 須另覓球場。' },
 ];
-export const SCENE_GAME = 'G4'; // 場上球員取自這一場的先發陣容
+export const SCENE_GAME = 'G5'; // 場上球員取自這一場的先發陣容（該場有 lineups 就用它，否則用 TEAMS 的 G4 陣容）
 
 // 啦啦隊（feature: true 的成員會站在應援台並顯示名牌）
 export const CHEER = {

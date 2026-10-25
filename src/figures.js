@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { CHEER, TEAMS } from './data.js';
+import { sceneGame } from './games.js';
 import { R0, pick, rng } from './util.js';
 import { scene } from './core.js';
 import { G, add, group } from './kit.js';
@@ -54,7 +55,7 @@ const entById = new Map();
 function addEnt(e) { ents.push(e); entById.set(e.id, e); return e; }
 
 for (const team of ['wc', 'ctbc']) {
-  const T = TEAMS[team];
+  const T = sceneGame.lineups?.[team] ?? TEAMS[team]; // the scene game's own lineup when it has one
   T.lineup.forEach(([name, pos], i) => {
     const f = figure(team, 'player');
     addEnt({ id: `p:${team}:${name}`, kind: 'player', team, name, pos, order: i + 1, fig: f, target: new THREE.Vector3(), face: 0, ph: R0() * 9 });
