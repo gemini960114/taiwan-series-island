@@ -6,7 +6,16 @@
 
 ## 影片
 
-用這個網頁錄製的球隊介紹影片，各介紹三位球員與三位啦啦隊員：
+用這個網頁錄製的球隊介紹影片，各介紹三位球員與三位啦啦隊員。
+
+**G5（10/25）中信 4:3 味全**：當天的先發陣容與比分
+
+| 中信兄弟 | 味全龍 |
+|---|---|
+| [![中信兄弟 G5 影片](https://img.youtube.com/vi/t1lzr-yR58o/hqdefault.jpg)](https://youtu.be/t1lzr-yR58o) | [![味全龍 G5 影片](https://img.youtube.com/vi/777AqUNSCnU/hqdefault.jpg)](https://youtu.be/777AqUNSCnU) |
+| [羅戈、江坤宇、黃韋盛與 Passion Sisters](https://youtu.be/t1lzr-yR58o) | [蔣銲、劉基鴻、郭天信與小龍女](https://youtu.be/777AqUNSCnU) |
+
+**G4（10/21）陣容版**
 
 | 中信兄弟 | 味全龍 |
 |---|---|
