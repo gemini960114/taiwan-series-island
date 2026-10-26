@@ -6,16 +6,23 @@
 
 ## 影片
 
-用這個網頁錄製的球隊介紹影片，各介紹三位球員與三位啦啦隊員。
+用這個網頁錄製的球隊介紹影片，各介紹三位球員與三位啦啦隊員，場上是當天的先發陣容與比分。
 
-**G5（10/25）中信 4:3 味全**：當天的先發陣容與比分
+### G6（10/26）味全 6:0 中信，味全龍封王
+
+| 味全龍 | 中信兄弟 |
+|---|---|
+| [![味全龍 G6 影片](https://img.youtube.com/vi/aT9OqH1AO10/hqdefault.jpg)](https://youtu.be/aT9OqH1AO10) | [![中信兄弟 G6 影片](https://img.youtube.com/vi/xMgL4Af1CYs/hqdefault.jpg)](https://youtu.be/xMgL4Af1CYs) |
+| [梅賽鍶、蔣少宏、張政禹與小龍女](https://youtu.be/aT9OqH1AO10) | [勝騎士、王威晨、江坤宇與 Passion Sisters](https://youtu.be/xMgL4Af1CYs) |
+
+### G5（10/25）中信 4:3 味全
 
 | 中信兄弟 | 味全龍 |
 |---|---|
 | [![中信兄弟 G5 影片](https://img.youtube.com/vi/t1lzr-yR58o/hqdefault.jpg)](https://youtu.be/t1lzr-yR58o) | [![味全龍 G5 影片](https://img.youtube.com/vi/777AqUNSCnU/hqdefault.jpg)](https://youtu.be/777AqUNSCnU) |
 | [羅戈、江坤宇、黃韋盛與 Passion Sisters](https://youtu.be/t1lzr-yR58o) | [蔣銲、劉基鴻、郭天信與小龍女](https://youtu.be/777AqUNSCnU) |
 
-**G4（10/21）陣容版**
+### G4（10/21）陣容版
 
 | 中信兄弟 | 味全龍 |
 |---|---|
