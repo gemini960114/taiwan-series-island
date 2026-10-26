@@ -158,7 +158,7 @@ $('#introLine').textContent = SITE.intro;
 function lineScore(g) {
   const cols = g.line.wc.length;
   const row = t => `<tr class="${winnerOf(g) === t ? 'w' : ''}"><td>${TEAMS[t].short}</td>${g.line[t].map((v, i) =>
-    `<td class="${v ? 'run' : ''}">${v == null ? 'X' : v}${g.walkoff && t === g.home && i === cols - 1 ? 'x' : ''}</td>`).join('')}${g.rhe[t].map((v, i) => `<td class="${i ? '' : 'r sep'}">${v}</td>`).join('')}</tr>`;
+    `<td class="${v ? 'run' : ''}">${v == null ? 'X' : v}${g.walkoff && t === g.home && i === cols - 1 ? 'x' : ''}</td>`).join('')}${g.rhe[t].map((v, i) => `<td class="${i ? '' : 'r sep'}">${v ?? '–'}</td>`).join('')}</tr>`;
   // any of these may be missing right after a game, before the box score is published
   const facts = [g.wp && `勝投 ${g.wp}`, g.lp && `敗投 ${g.lp}`, g.sv && `救援 ${g.sv}`, g.hr && `全壘打 ${g.hr}`].filter(Boolean).join('・');
   return `<div class="cap"><span><b>台灣大賽 ${g.g}</b>・${g.date}（${g.wd}）・${g.venue}</span>${g.crowd ? `<span>${g.crowd} 人</span>` : ''}</div>
@@ -179,7 +179,8 @@ const seriesWins = () => {
   SCHEDULE.filter(played).forEach(g => w[winnerOf(g)]++);
   return w;
 };
-const nextGame = () => SCHEDULE.find(g => !played(g));
+const seriesOver = () => { const w = seriesWins(); return w.wc >= 4 || w.ctbc >= 4; };
+const nextGame = () => seriesOver() ? undefined : SCHEDULE.find(g => !played(g)); // none once a team has 4 wins
 function fmtCountdown(ms) {
   if (ms <= 0) return '已開打';
   const s = Math.floor(ms / 1000), d = Math.floor(s / 86400);
@@ -220,7 +221,8 @@ const gameText = g => [g.g, g.date, `週${g.wd}`, `星期${g.wd}`, g.time, TEAMS
 function gameRow(g) {
   const ng = nextGame();
   const status = played(g) ? '<span class="sbadge done">已完賽</span>'
-    : g === ng ? '<span class="sbadge next">下一場</span>' : g.ifNeeded ? '<span class="sbadge">若有必要</span>' : '';
+    : g === ng ? '<span class="sbadge next">下一場</span>' : seriesOver() ? '<span class="sbadge">不需舉行</span>'
+    : g.ifNeeded ? '<span class="sbadge">若有必要</span>' : '';
   const typhoon = g.postponed ? '<span class="sbadge typhoon">颱風順延</span>' : '';
   const main = played(g)
     ? `${TEAMS[g.away].short} ${runsOf(g, g.away)} : ${runsOf(g, g.home)} ${TEAMS[g.home].short}${g.line.wc.length > 9 ? `（${g.line.wc.length} 局）` : ''}`
@@ -297,9 +299,10 @@ function selectGame(id) {
       <dt>球場</dt><dd>${g.venue}</dd>
       <dt>主場</dt><dd>${TEAMS[g.home].name}</dd>
       ${g.sp ? `<dt>先發</dt><dd>${g.sp}</dd>` : ''}
-      ${played(g) ? `<dt>勝方</dt><dd>${TEAMS[winnerOf(g)].name}</dd>` : `<dt>狀態</dt><dd>${g.ifNeeded ? '若有必要才舉行' : '未開打'}</dd>`}
+      ${played(g) ? `<dt>勝方</dt><dd>${TEAMS[winnerOf(g)].name}</dd>` : `<dt>狀態</dt><dd>${seriesOver() ? '系列戰已分出勝負，不需舉行' : g.ifNeeded ? '若有必要才舉行' : '未開打'}</dd>`}
     </dl>
     ${played(g) ? `<div class="score">${lineScore(g)}</div><p>外野記分板已切換成這一場。</p>`
+      : seriesOver() ? `<p>${g.note ?? ''}</p>`
       : `<h3>開打倒數</h3><div class="countdown" data-start="${g.start}">${fmtCountdown(new Date(g.start) - Date.now())}</div><p>${g.note ?? ''}</p>`}
     ${played(g) && g !== sceneGame ? `<button class="cta">記分板換回 ${SCENE_GAME}</button>` : ''}`;
   d.querySelector('.back').onclick = () => { state.tab = 'series'; document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x.dataset.tab === 'series')); goHome(); };
@@ -331,7 +334,7 @@ function renderDetail(e) {
       <dl>
         <dt>棒次</dt><dd>${e.sp ? '—' : `第 ${e.order} 棒`}</dd>
         <dt>守位</dt><dd>${e.sp ? '先發投手' : POS[e.pos]}</dd>
-        <dt>本場</dt><dd>${T.name} ${sceneGame.rhe[e.team][0]} 分、${sceneGame.rhe[e.team][1]} 安打</dd>
+        <dt>本場</dt><dd>${T.name} ${sceneGame.rhe[e.team][0]} 分${sceneGame.rhe[e.team][1] != null ? `、${sceneGame.rhe[e.team][1]} 安打` : ''}</dd>
         <dt>場上</dt><dd>${{ field: '守備中', bat: '打擊中', deck: '準備區', run: '壘上跑者', bench: '休息區' }[e.role] ?? '—'}</dd>
       </dl>
       <h3>同隊先發</h3>
@@ -487,8 +490,10 @@ const FACTS = [
   ['G5', '先發投手：中信 羅戈 vs 味全 蔣銲'],
   ['G5', '劉基鴻 4 局下陽春全壘打'],
   ['颱風', '強烈颱風薔琵來襲，G5 連兩天延賽，順延到 10/25（日）'],
-  ['G6', '10/26（一）光復節補假 15:05，味全 3 勝 2 敗領先'],
-  ['G7', '若有必要：10/27（二）18:35，場地未定'],
+  ['G6', '10/26 味全 6:0 完封中信，4 勝 2 敗奪下隊史第 6 冠'],
+  ['G6', '先發投手：中信 勝騎士 vs 味全 梅賽鍶'],
+  ['G6', '梅賽鍶 8 局無失分，獲台灣大賽 MVP'],
+  ['G6', '8 局下蔣少宏兩分砲，味全單局 5 分'],
   ['應援', '小龍女 Captain 李多慧、金娜妍、權喜原 在一壘側應援台'],
   ['應援', 'Passion Sisters 邊荷律、金渡兒、JJUBI 在三壘側應援台'],
 ];

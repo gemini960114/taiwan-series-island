@@ -157,7 +157,7 @@ const board = (() => {
         x.fillStyle = v ? '#ffcf3a' : '#d7e3dd';
         x.fillText(v == null ? 'X' : walk ? v + 'x' : String(v), col(i) - (walk ? 6 : 0), y);
       });
-      gm.rhe[t].forEach((v, i) => { x.fillStyle = i ? '#d7e3dd' : '#ffcf3a'; x.fillText(String(v), 830 + i * 60, y); });
+      gm.rhe[t].forEach((v, i) => { x.fillStyle = i ? '#d7e3dd' : '#ffcf3a'; x.fillText(v == null ? '–' : String(v), 830 + i * 60, y); }); // null = not reported yet
     });
     tex.needsUpdate = true;
   }
